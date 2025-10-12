@@ -281,7 +281,7 @@ function animationHandler(entity)
 }
 
 /** Set entity animation
- * @param {IAnimation | String} animation - IAnimation object or String name of animation
+ * @param {IAnimation} animation - IAnimation object or String name of animation
  */
 animationHandler.prototype.setAnimation = function(animation) 
 {
