@@ -248,7 +248,7 @@ function getRandom(min, max, getInt)
  */
 function getDbcLevel(player)
 {
-    if(!lib.isPlayer()) return 0;
+    if(!lib.isPlayer(player)) return 0;
     var stats = player.getDBCPlayer().getAllAttributes();
     var totalStats = -55;
     for (var i = 0; i < stats.length; i++) totalStats += stats[i];
