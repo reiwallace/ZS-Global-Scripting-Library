@@ -16,6 +16,7 @@ var libraryObject = {
     get3dDirection: get3dDirection,
     isPlayer: isPlayer,
     isValidPlayer: isValidPlayer,
+    getDbcLevel: getDbcLevel,
     checkBlocking: checkBlocking,
     animationHandler: animationHandler,
     dbcDisplayHandler: dbcDisplayHandler,
@@ -233,11 +234,24 @@ function get3dDirection(pos1, pos2)
 * @param {int} min - the minimum number to generate a value from
 * @param {int} max - the minimum number to generate a value from 
 * @param {Boolean} getInt - Only returns integer values if true
+* @returns {Double} - Random number
 */
 function getRandom(min, max, getInt)
 {  
     if(getInt) return Math.floor(Math.random() * (max - min + 1)) + min;
     else return Math.random() * (max - min) + min;
+}
+
+/** Returns player's dbc level
+ * @param {IPlayer} player 
+ * @returns {Int} - Player's dbc level
+ */
+function getDbcLevel(player)
+{
+    var stats = player.getDBCPlayer().getAllAttributes();
+    var totalStats = -55;
+    for (var i = 0; i < stats.length; i++) totalStats += stats[i];
+    return Math.floor(totalStats / 5);
 }
 
 /** Returns if a player is either sword blocking or dbc blocking
