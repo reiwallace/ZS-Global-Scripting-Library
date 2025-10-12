@@ -193,6 +193,11 @@ function speak(player, text, color, size, xOffset, yOffset, timeout, speakID)
     if(timeout != 0) startGlobalTimer(303, timeout, false, player.getEntityId(), speakObject);
 }
 
+
+/** Removes speak overlay
+ * @param {IPlayer} player to remove the overlay from
+ * @param {integer} speakID of the overlay to remove
+ */
 function cancelSpeak(player, speakID)
 { // Remove text from player screen
     player.closeOverlay(speakID); 
