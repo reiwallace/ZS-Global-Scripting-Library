@@ -34,6 +34,7 @@ progressBar.prototype.config = function() {
 }
 
 /** progressBar constructor
+ * @constructor
  * @param {Int} maxValue - Max value of bar
  * @param {Int} initialValue - Initial value of bar
  * @param {Double[]} breakPoints - An ARRAY of decimal values to place ticks at 
