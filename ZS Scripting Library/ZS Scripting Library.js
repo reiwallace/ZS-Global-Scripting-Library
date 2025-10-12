@@ -244,10 +244,11 @@ function getRandom(min, max, getInt)
 
 /** Returns player's dbc level
  * @param {IPlayer} player 
- * @returns {Int} - Player's dbc level
+ * @returns {Int} - player's dbc level
  */
 function getDbcLevel(player)
 {
+    if(!lib.isPlayer()) return 0;
     var stats = player.getDBCPlayer().getAllAttributes();
     var totalStats = -55;
     for (var i = 0; i < stats.length; i++) totalStats += stats[i];
