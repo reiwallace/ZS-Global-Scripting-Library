@@ -377,6 +377,7 @@ dbcDisplayHandler.prototype.quickTransform = function(form, disableAura)
     }
     actMan.scheduleParallel(this.updateFormDelay, qtUpdateForm).addData("actionData", actionData);
     if(disableAura) actMan.scheduleParallel(this.disableAuraDelay, qtDisableAura).addData("actionData", actionData);
+    actMan.start();
 }
 
 /**
