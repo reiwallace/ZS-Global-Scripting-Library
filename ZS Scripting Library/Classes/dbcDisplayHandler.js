@@ -48,16 +48,26 @@ dbcDisplayHandler.prototype.quickTransform = function(form, disableAura)
     this.tempForm = form;
     
     // Start timers
-    lib.startGlobalTimer(301, this.updateFormDelay, false, this.npc.getEntityId(), this);
-    if(disableAura) lib.startGlobalTimer(302, this.disableAuraDelay, false, this.npc.getEntityId(), this);
-}
-
-/** Timer function for quickTransform to update npc's form
- */
-dbcDisplayHandler.prototype.qtUpdateForm = function()
-{
-    this.setForm(this.tempForm);
-    this.npc.playSound(this.ascendSound, 0.3, 1);
+    var actMan = API.getActionManager();
+    var actionData = {
+        handlerObj : this,
+        disableAura : disableAura
+    };
+    function qtUpdateForm(action) {
+        var actionData = action.getData("actionData");
+        var handler = actionData.handlerObj;
+        handler.setForm(handler.tempForm);
+        handler.npc.playSound(handler.ascendSound, 0.3, 1);
+        action.markDone();
+    }
+    function qtDisableAura(action) {
+        var actionData = action.getData("actionData");
+        actionData.handlerObj.toggleAura("false");
+        action.markDone();
+    }
+    actMan.scheduleParallel(this.updateFormDelay, qtUpdateForm).addData("actionData", actionData);
+    if(disableAura) actMan.scheduleParallel(this.disableAuraDelay, qtDisableAura).addData("actionData", actionData);
+    actMan.start();
 }
 
 /**
