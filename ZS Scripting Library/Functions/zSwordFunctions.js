@@ -1,3 +1,8 @@
+// ZSWORD FUNCTIONS CONFIG
+var zSwordLinkedId = 0;
+var zSwordQuestId = 0;
+var zSwordRewardSlot = 0;
+
 /** Give Z Sword from quest rewards
  * @param {IPlayer} player 
  */
