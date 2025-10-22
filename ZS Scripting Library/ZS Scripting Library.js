@@ -31,62 +31,7 @@ var libraryObject = {
     deck: deck
 }
 
-// TIMERS
-var dbcDisplayHandler_UPDATE_FORM = 301;
-var dbcDisplayHandler_DISABLE_AURA = 302;
-var speak_OVERLAY_TIMEOUT = 303;
-var progressBar_OVERLAY_TIMEOUT = 304;
-
-//gets the world with id 0, sagaworld
-API.addGlobalObject("lib", libraryObject);
-
-var world = API.getIWorld(0);
-
-// Save timers to temp data
-function init(event) { world.setTempData("libTimers", event.npc.timers); }
-
-// Timers pull object and compare to server time
-function timer(event) {
-    var id = event.id;
-    // Get object array for specific timer and cycle through array
-    var object = world.getTempData(id);
-    var timerId = parseInt((id + "").substring(0, 3));
-    // ADD TIMER FUNCTIONALITY
-    if(!object) return;
-    switch(timerId) {
-
-
-
-
-
-
-        case(progressBar_OVERLAY_TIMEOUT):
-            if(!object.progressBar instanceof progressBar) return;
-            object.progressBar.removeBar(object.player);
-            break;
-    }
-    world.removeTempData(id);
-}
-
-
 // GLOBAL FUNCTIONS --------------------------------------------------------------------------------------------------
-
-/** Starts a timer on the global script npc
- * @param {int} timerId - Id of the timer to start
- * @param {int} duration - Duration of the timer in ticks 
- * @param {Boolean} timerRepeats - If timer repeats
- * @param {Object} object - Class object required by timer
- */
-function startGlobalTimer(timerId, duration, timerRepeats, entityId, object)
-{
-    var world = API.getIWorld(0);
-    var timers = world.getTempData("libTimers");
-
-    // Starts timer with correct ID
-    var dataId =  timerId + "" + entityId;
-    world.setTempData(dataId, object);
-    timers.forceStart(dataId, duration, timerRepeats);
-}
 
 /** Sends a message to a player
  * @param {IPlayer} playerName 
