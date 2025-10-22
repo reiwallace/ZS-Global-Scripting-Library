@@ -15,7 +15,7 @@ function deck(size, noReset)
 deck.prototype.drawRandom = function()
 {
     if(this.deck.length < 1 && this.reset) this.resetDeck();
-    return this.deck.splice(lib.getRandom(0, this.deck.length - 1, true), 1);
+    return this.deck.splice(lib.getRandom(0, this.deck.length - 1, true), 1)[0];
 }
 
 /** Draws the card from the back of the deck
@@ -33,7 +33,7 @@ deck.prototype.drawLast = function()
 deck.prototype.drawFirst = function()
 {
     if(this.deck.length < 1 && this.reset) this.resetDeck();
-    return this.deck.splice(0, 1);
+    return this.deck.splice(0, 1)[0];
 }
 
 /** Resets the deck to its initial size
