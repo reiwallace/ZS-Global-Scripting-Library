@@ -6,7 +6,6 @@
 //our object storing every single function
 var libraryObject = {
     debugMessage: sendDebugMessage,
-    startGlobalTimer: startGlobalTimer,
     checkReset: checkReset,
     checkResetParty: checkResetParty,
     speak: speak,
