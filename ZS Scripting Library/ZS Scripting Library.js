@@ -460,13 +460,15 @@ dbcDisplayHandler.prototype.quickTransform = function(form, disableAura)
         var handler = actionData.handlerObj;
         handler.setForm(handler.tempForm);
         handler.npc.playSound(handler.ascendSound, 0.3, 1);
+        action.markDone();
     }
     function qtDisableAura(action) {
         var actionData = action.getData("actionData");
         actionData.handlerObj.toggleAura("false");
+        action.markDone();
     }
-    actMan.scheduleParallel(this.updateFormDelay, qtUpdateForm).addData("actionData", actionData);
-    if(disableAura) actMan.scheduleParallel(this.disableAuraDelay, qtDisableAura).addData("actionData", actionData);
+    actMan.scheduleParallel(this.updateFormDelay, qtUpdateForm).setData("actionData", actionData);
+    if(disableAura) actMan.scheduleParallel(this.disableAuraDelay, qtDisableAura).setData("actionData", actionData);
     actMan.start();
 }
 

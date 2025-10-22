@@ -65,8 +65,8 @@ dbcDisplayHandler.prototype.quickTransform = function(form, disableAura)
         actionData.handlerObj.toggleAura("false");
         action.markDone();
     }
-    actMan.scheduleParallel(this.updateFormDelay, qtUpdateForm).addData("actionData", actionData);
-    if(disableAura) actMan.scheduleParallel(this.disableAuraDelay, qtDisableAura).addData("actionData", actionData);
+    actMan.scheduleParallel(this.updateFormDelay, qtUpdateForm).setData("actionData", actionData);
+    if(disableAura) actMan.scheduleParallel(this.disableAuraDelay, qtDisableAura).setData("actionData", actionData);
     actMan.start();
 }
 
