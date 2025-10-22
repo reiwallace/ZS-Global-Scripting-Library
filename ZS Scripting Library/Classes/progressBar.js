@@ -102,10 +102,26 @@ progressBar.prototype.setValue = function(value, player)
  */
 progressBar.prototype.displayBar = function(player)
 {
+    function hideBar(action) {
+        var data = action.getData("overlayData");
+        if(!lib.isPlayer(data.player)) {
+            action.markDone();
+            return;
+        }
+        data.player.closeOverlay(data.progressBar.overlayId); 
+        action.markDone();
+    }
     if(!lib.isPlayer(player)) return;
     player.showCustomOverlay(this.barOverlay);
     this.barOverlay.update(player);
-    if(this.DO_TIMEOUT) lib.startGlobalTimer(304, this.TIMEOUT, false, player.getEntityId(), {"progressBar": this, "player": player});
+    var actionManager = API.getActionManager();
+    if(this.DO_TIMEOUT) {
+        var actionManager = API.getActionManager();
+        var taskName = "progressBar" + this.overlayId + player.getName();
+        if(actionManager.hasAny(taskName)) actionManager.cancelAny(taskName);
+        actionManager.scheduleParallel(taskName, 5, this.TIMEOUT, hideBar).setData("overlayData", {player: player, progressBar: this});
+        actionManager.start();
+    }
 }
 
 /** Removes bar from a player's UI
@@ -144,9 +160,9 @@ progressBar.prototype.setTimeout = function(timeout)
 }
 
 /** Enables/Disables timeout
- * @param {Boolean} doTimeout
+ * @param {Boolean} timeout
  */
-progressBar.prototype.enableTimeout = function(doTimeout)
+progressBar.prototype.toggleTimeout = function(timeout)
 {
-    this.DO_TIMEOUT = doTimeout;
+    this.DO_TIMEOUT = timeout;
 }

@@ -54,21 +54,11 @@ function timer(event) {
     // ADD TIMER FUNCTIONALITY
     if(!object) return;
     switch(timerId) {
-        case(dbcDisplayHandler_UPDATE_FORM):
-            // Handle updating quick transform
-            if(!object instanceof dbcDisplayHandler) return;
-            object.qtUpdateForm();
-            break;
 
-        case(dbcDisplayHandler_DISABLE_AURA):
-            // Handle ending quick transform
-            if(!object instanceof dbcDisplayHandler) return;
-            object.toggleAura(false);
-            break;
 
-        case(speak_OVERLAY_TIMEOUT):
-            if(object && object.player) object.player.closeOverlay(object.id);
-            break;
+
+
+
 
         case(progressBar_OVERLAY_TIMEOUT):
             if(!object.progressBar instanceof progressBar) return;
@@ -649,10 +639,26 @@ progressBar.prototype.setValue = function(value, player)
  */
 progressBar.prototype.displayBar = function(player)
 {
+    function hideBar(action) {
+        var data = action.getData("overlayData");
+        if(!lib.isPlayer(data.player)) {
+            action.markDone();
+            return;
+        }
+        data.player.closeOverlay(data.progressBar.overlayId); 
+        action.markDone();
+    }
     if(!lib.isPlayer(player)) return;
     player.showCustomOverlay(this.barOverlay);
     this.barOverlay.update(player);
-    if(this.DO_TIMEOUT) lib.startGlobalTimer(304, this.TIMEOUT, false, player.getEntityId(), {"progressBar": this, "player": player});
+    var actionManager = API.getActionManager();
+    if(this.DO_TIMEOUT) {
+        var actionManager = API.getActionManager();
+        var taskName = "progressBar" + this.overlayId + player.getName();
+        if(actionManager.hasAny(taskName)) actionManager.cancelAny(taskName);
+        actionManager.scheduleParallel(taskName, 5, this.TIMEOUT, hideBar).setData("overlayData", {player: player, progressBar: this});
+        actionManager.start();
+    }
 }
 
 /** Removes bar from a player's UI
@@ -691,11 +697,11 @@ progressBar.prototype.setTimeout = function(timeout)
 }
 
 /** Enables/Disables timeout
- * @param {Boolean} doTimeout
+ * @param {Boolean} timeout
  */
-progressBar.prototype.enableTimeout = function(doTimeout)
+progressBar.prototype.toggleTimeout = function(timeout)
 {
-    this.DO_TIMEOUT = doTimeout;
+    this.DO_TIMEOUT = timeout;
 }
 
 // ---------------------------------------------------------------------------
