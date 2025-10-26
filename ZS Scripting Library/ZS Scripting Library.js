@@ -29,6 +29,7 @@ var libraryObject = {
     progressBar: progressBar,
     deck: deck
 }
+API.addGlobalObject("lib", libraryObject);
 
 // GLOBAL FUNCTIONS --------------------------------------------------------------------------------------------------
 
