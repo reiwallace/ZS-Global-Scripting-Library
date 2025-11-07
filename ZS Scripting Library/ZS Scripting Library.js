@@ -144,6 +144,8 @@ function speak(player, text, speakID, timeout, color, hasShadow, size, noCenter,
     speechOverlay.getComponent(2).setScale(size); // Resize the label
     player.showCustomOverlay(speechOverlay); // Place the overlay on the player's screen
     speechOverlay.update(player); // Update the label to be visible
+
+    if(timeout == 0) return;
     var speakObject = {
         player: player,
         id: speakID
