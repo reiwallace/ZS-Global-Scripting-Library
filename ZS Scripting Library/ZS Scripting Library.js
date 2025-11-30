@@ -24,6 +24,7 @@ var libraryObject = {
     holdingZSword: holdingZSword,
     getProfileData: getProfileData,
     getActiveSlotId: getActiveSlotId,
+    isInRange: isInRange,
     animationHandler: animationHandler,
     dbcDisplayHandler: dbcDisplayHandler,
     progressBar: progressBar,
@@ -319,6 +320,20 @@ function getActiveSlotId(player)
 {
     if(!lib.isPlayer(player)) return;
     return API.getProfileHandler().getProfile(player).getCurrentSlotId();
+}
+
+/** Returns if anchor position is in range of target position
+ * @param {IPos} anchorPos 
+ * @param {IPos} targetPos 
+ * @param {Double} range 
+ * @returns Boolean
+ */
+function isInRange(anchorPos, targetPos, range) {
+  if(
+    !anchorPos.getClass().toString().equals("class noppes.npcs.scripted.ScriptBlockPos") || 
+    !targetPos.getClass().toString().equals("class noppes.npcs.scripted.ScriptBlockPos")
+    ) return false;
+  return anchorPos.distanceTo(targetPos) <= range;
 }
 
 // GLOBAL CLASSES ------------------------------------------------------------------------------------------------
