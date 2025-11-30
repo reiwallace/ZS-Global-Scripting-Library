@@ -192,6 +192,8 @@ function getAngleToEntity(entity1, entity2)
  */
 function get3dDirection(pos1, pos2)
 {
+    if(pos1.getClass().toString().equals("class noppes.npcs.scripted.ScriptBlockPos")) pos1 = lib.posToDouble(pos1);
+    if(pos2.getClass().toString().equals("class noppes.npcs.scripted.ScriptBlockPos")) pos2 = lib.posToDouble(pos2);
     var direction = { 
         x: pos2[0] - pos1[0],
         y: pos2[1] - pos1[1],
