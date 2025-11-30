@@ -26,6 +26,7 @@ var libraryObject = {
     getActiveSlotId: getActiveSlotId,
     isInRange: isInRange,
     kill: kill,
+    posToDouble: posToDouble,
     animationHandler: animationHandler,
     dbcDisplayHandler: dbcDisplayHandler,
     progressBar: progressBar,
@@ -191,14 +192,14 @@ function getAngleToEntity(entity1, entity2)
  */
 function get3dDirection(pos1, pos2)
 {
-        var direction = { 
-            x: pos2[0] - pos1[0],
-            y: pos2[1] - pos1[1],
-            z: pos2[2] - pos1[2]
-        }
-        var length = Math.sqrt(Math.pow(direction.x, 2) + Math.pow(direction.y, 2) + Math.pow(direction.z, 2)) //we calculate the length of the direction
-        var direction = [(direction.x / length), (direction.y / length), (direction.z / length)] //and then we normalize it and store it in the direction variable
-        return direction;
+    var direction = { 
+        x: pos2[0] - pos1[0],
+        y: pos2[1] - pos1[1],
+        z: pos2[2] - pos1[2]
+    }
+    var length = Math.sqrt(Math.pow(direction.x, 2) + Math.pow(direction.y, 2) + Math.pow(direction.z, 2)) //we calculate the length of the direction
+    var direction = [(direction.x / length), (direction.y / length), (direction.z / length)] //and then we normalize it and store it in the direction variable
+    return direction;
 }
 
 /** Returns a random number between two values
@@ -345,6 +346,15 @@ function kill(player){
     if(!isPlayer(player)) return false;
     API.executeCommand(player.world, "kill " + player.getName());
     return true;
+}
+
+/** Converts a pos object to a double array
+ * @param {IPos} pos 
+ * @returns Double[]
+ */
+function posToDouble(pos) {
+    if(!pos.getClass().toString().equals("class noppes.npcs.scripted.ScriptBlockPos")) return [];
+    return [pos.getX(), pos.getY(), pos.getZ()];
 }
 
 // GLOBAL CLASSES ------------------------------------------------------------------------------------------------
