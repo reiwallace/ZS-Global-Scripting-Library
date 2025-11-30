@@ -27,6 +27,7 @@ var libraryObject = {
     isInRange: isInRange,
     kill: kill,
     posToDouble: posToDouble,
+    messageAll: messageAll,
     animationHandler: animationHandler,
     dbcDisplayHandler: dbcDisplayHandler,
     progressBar: progressBar,
@@ -357,6 +358,19 @@ function kill(player){
 function posToDouble(pos) {
     if(!pos.getClass().toString().equals("class noppes.npcs.scripted.ScriptBlockPos")) return [];
     return [pos.getX(), pos.getY(), pos.getZ()];
+}
+
+/**
+ * Broadcasts a message to all players on the server.
+ * @param {IWorld} world - The world object.
+ * @param {string} message - The message to send.
+ */
+function messageAll(world, message) {
+    var players = world.getAllServerPlayers();
+    for (var i = 0; i < players.length; i++) {
+        if(!players[i]) continue;
+        players[i].sendMessage(message);
+    }
 }
 
 // GLOBAL CLASSES ------------------------------------------------------------------------------------------------
