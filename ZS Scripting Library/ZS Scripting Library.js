@@ -381,7 +381,7 @@ function messageAll(world, message) {
  * @param {String} message 
  */
 function whisper(player, from, message) {
-    if(typeof player == "string") player = API.getPlayer("player")
+    if(typeof player == "string") player = API.getPlayer(player);
     if(!lib.isPlayer(player)) return;
     player.sendMessage("\u00A76[" + from + "§r\u00A76 -> \u00A7cme\u00A76]§r " + message);
 }
