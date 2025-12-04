@@ -24,6 +24,12 @@ var libraryObject = {
     holdingZSword: holdingZSword,
     getProfileData: getProfileData,
     getActiveSlotId: getActiveSlotId,
+    isInRange: isInRange,
+    kill: kill,
+    posToDouble: posToDouble,
+    messageAll: messageAll,
+    whisper: whisper,
+    whisperAll: whisperAll,
     animationHandler: animationHandler,
     dbcDisplayHandler: dbcDisplayHandler,
     progressBar: progressBar,
@@ -183,20 +189,22 @@ function getAngleToEntity(entity1, entity2)
 }
 
 /** Returns direction from 1 position to a second in 3d space
- * @param {Double[]} pos1 - Initial position
- * @param {Double[]} pos2 - Target Position
+ * @param {Double[]|IPos} pos1 - Initial position
+ * @param {Double[]|IPos} pos2 - Target Position
  * @returns {Double[]} - Direction contained in an array
  */
 function get3dDirection(pos1, pos2)
 {
-        var direction = { 
-            x: pos2[0] - pos1[0],
-            y: pos2[1] - pos1[1],
-            z: pos2[2] - pos1[2]
-        }
-        var length = Math.sqrt(Math.pow(direction.x, 2) + Math.pow(direction.y, 2) + Math.pow(direction.z, 2)) //we calculate the length of the direction
-        var direction = [(direction.x / length), (direction.y / length), (direction.z / length)] //and then we normalize it and store it in the direction variable
-        return direction;
+    if(!Array.isArray(pos1) && pos1.getClass().toString().equals("class noppes.npcs.scripted.ScriptBlockPos")) pos1 = lib.posToDouble(pos1);
+    if(!Array.isArray(pos2) && pos2.getClass().toString().equals("class noppes.npcs.scripted.ScriptBlockPos")) pos2 = lib.posToDouble(pos2);
+    var direction = { 
+        x: pos2[0] - pos1[0],
+        y: pos2[1] - pos1[1],
+        z: pos2[2] - pos1[2]
+    }
+    var length = Math.sqrt(Math.pow(direction.x, 2) + Math.pow(direction.y, 2) + Math.pow(direction.z, 2)) //we calculate the length of the direction
+    var direction = [(direction.x / length), (direction.y / length), (direction.z / length)] //and then we normalize it and store it in the direction variable
+    return direction;
 }
 
 /** Returns a random number between two values
@@ -319,6 +327,77 @@ function getActiveSlotId(player)
 {
     if(!lib.isPlayer(player)) return;
     return API.getProfileHandler().getProfile(player).getCurrentSlotId();
+}
+
+/** Returns if anchor position is in range of target position
+ * @param {IPos} anchorPos 
+ * @param {IPos} targetPos 
+ * @param {Double} range 
+ * @returns Boolean
+ */
+function isInRange(anchorPos, targetPos, range) {
+  if(
+    !anchorPos.getClass().toString().equals("class noppes.npcs.scripted.ScriptBlockPos") || 
+    !targetPos.getClass().toString().equals("class noppes.npcs.scripted.ScriptBlockPos")
+    ) return false;
+  return anchorPos.distanceTo(targetPos) <= range;
+}
+
+/** Command kills a player
+ * @param {IPlayer|String} player 
+ * @returns Boolean - If the player was killed
+ */
+function kill(player){
+    if(typeof player == "string") player = API.getPlayer(player);
+    if(!isPlayer(player)) return false;
+    API.executeCommand(player.world, "kill " + player.getName());
+    return true;
+}
+
+/** Converts a pos object to a double array
+ * @param {IPos} pos 
+ * @returns Double[]
+ */
+function posToDouble(pos) {
+    try { if(!pos.getClass().toString().equals("class noppes.npcs.scripted.ScriptBlockPos")) return []; } 
+    catch (error) { return []; }
+    
+    return [pos.getX(), pos.getY(), pos.getZ()];
+}
+
+/**
+ * Broadcasts a message to all players on the server.
+ * @param {string} message - The message to send.
+ */
+function messageAll(message) {
+    var players = API.getIWorld(0).getAllServerPlayers();
+    for (var i = 0; i < players.length; i++) {
+        if(!players[i]) continue;
+        players[i].sendMessage(message);
+    }
+}
+
+/** Mimics a whisper message
+ * @param {IPlayer|String} player 
+ * @param {String} from - Sending name
+ * @param {String} message 
+ */
+function whisper(player, from, message) {
+    if(typeof player == "string") player = API.getPlayer(player);
+    if(!lib.isPlayer(player)) return;
+    player.sendMessage("\u00A76[" + from + "§r\u00A76 -> \u00A7cme\u00A76]§r " + message);
+}
+
+/** Mimics a whisper message and sends to every player currently online
+ * @param {String} from - Sending name
+ * @param {String} message 
+ */
+function whisperAll(from, message) {
+    var players = API.getIWorld(0).getAllServerPlayers();
+    for (var i = 0; i < players.length; i++) {
+        if(!players[i]) continue;
+        lib.whisper(players[i], from, message);
+    }
 }
 
 // GLOBAL CLASSES ------------------------------------------------------------------------------------------------
