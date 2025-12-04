@@ -3,6 +3,8 @@
  * @returns Double[]
  */
 function posToDouble(pos) {
-    if(!pos.getClass().toString().equals("class noppes.npcs.scripted.ScriptBlockPos")) return [];
+    try { if(!pos.getClass().toString().equals("class noppes.npcs.scripted.ScriptBlockPos")) return []; } 
+    catch (error) { return []; }
+    
     return [pos.getX(), pos.getY(), pos.getZ()];
 }
