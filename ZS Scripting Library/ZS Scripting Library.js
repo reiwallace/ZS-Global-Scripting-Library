@@ -189,8 +189,8 @@ function getAngleToEntity(entity1, entity2)
 }
 
 /** Returns direction from 1 position to a second in 3d space
- * @param {Double[]} pos1 - Initial position
- * @param {Double[]} pos2 - Target Position
+ * @param {Double[]|IPos} pos1 - Initial position
+ * @param {Double[]|IPos} pos2 - Target Position
  * @returns {Double[]} - Direction contained in an array
  */
 function get3dDirection(pos1, pos2)
@@ -344,7 +344,7 @@ function isInRange(anchorPos, targetPos, range) {
 }
 
 /** Command kills a player
- * @param {IPlayer} player 
+ * @param {IPlayer|String} player 
  * @returns Boolean - If the player was killed
  */
 function kill(player){
@@ -367,10 +367,9 @@ function posToDouble(pos) {
 
 /**
  * Broadcasts a message to all players on the server.
- * @param {IWorld} world - The world object.
  * @param {string} message - The message to send.
  */
-function messageAll(world, message) {
+function messageAll(message) {
     var players = API.getIWorld(0).getAllServerPlayers();
     for (var i = 0; i < players.length; i++) {
         if(!players[i]) continue;
@@ -379,7 +378,7 @@ function messageAll(world, message) {
 }
 
 /** Mimics a whisper message
- * @param {IPlayer} player 
+ * @param {IPlayer|String} player 
  * @param {String} from - Sending name
  * @param {String} message 
  */

@@ -1,9 +1,8 @@
 /**
  * Broadcasts a message to all players on the server.
- * @param {IWorld} world - The world object.
- * @param {string} message - The message to send.
+ * @param {String} message - The message to send.
  */
-function messageAll(world, message) {
+function messageAll(message) {
     var players = API.getIWorld(0).getAllServerPlayers();
     for (var i = 0; i < players.length; i++) {
         if(!players[i]) continue;
