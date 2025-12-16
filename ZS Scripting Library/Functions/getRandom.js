@@ -2,6 +2,7 @@
 * @param {int} min - the minimum number to generate a value from
 * @param {int} max - the minimum number to generate a value from 
 * @param {Boolean} getInt - Only returns integer values if true
+* @returns {Double} - Random number
 */
 function getRandom(min, max, getInt)
 {  

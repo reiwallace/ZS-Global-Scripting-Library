@@ -3,7 +3,7 @@
  * @returns {Boolean}
  */
 function isPlayer(entity) {
-  return entity && entity.getType() == 1
+  return entity && entity.getType() == 1;
 }
 
 /**
@@ -20,5 +20,5 @@ function isPlayer(entity) {
  * @returns {boolean} True if the player is valid, otherwise false.
  */
 function isValidPlayer(player) {
-    return (player && player.getType() == 1 && player.getDBCPlayer() && player.getMode() == 0 && !player.getDBCPlayer().isDBCFusionSpectator())
+    return (player && player.getType() == 1 && player.getDBCPlayer() && player.getMode() == 0 && !player.getDBCPlayer().isDBCFusionSpectator());
 }

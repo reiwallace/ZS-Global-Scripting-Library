@@ -1,6 +1,6 @@
 /**
  * Broadcasts a message to all players on the server.
- * @param {String} message - The message to send.
+ * @param {string} message - The message to send.
  */
 function messageAll(message) {
     var players = API.getIWorld(0).getAllServerPlayers();

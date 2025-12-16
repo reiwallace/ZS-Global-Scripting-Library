@@ -1,5 +1,5 @@
 /** Command kills a player
- * @param {IPlayer|String} player 
+ * @param {(IPlayer | String)} player
  * @returns Boolean - If the player was killed
  */
 function kill(player){

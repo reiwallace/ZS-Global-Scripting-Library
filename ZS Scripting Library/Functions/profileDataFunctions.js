@@ -4,6 +4,7 @@
  */
 function getProfileData(player)
 {
+    if(!lib.isPlayer(player)) return;
     return API.getProfileHandler().getProfile(player);
 }
 
@@ -13,5 +14,6 @@ function getProfileData(player)
  */
 function getActiveSlotId(player)
 {
+    if(!lib.isPlayer(player)) return;
     return API.getProfileHandler().getProfile(player).getCurrentSlotId();
 }

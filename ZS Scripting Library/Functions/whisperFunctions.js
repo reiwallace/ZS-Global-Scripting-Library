@@ -1,5 +1,5 @@
 /** Mimics a whisper message
- * @param {IPlayer|String} player 
+ * @param {(IPlayer | String)} player
  * @param {String} from - Sending name
  * @param {String} message 
  */

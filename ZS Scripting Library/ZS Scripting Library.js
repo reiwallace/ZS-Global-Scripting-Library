@@ -189,8 +189,8 @@ function getAngleToEntity(entity1, entity2)
 }
 
 /** Returns direction from 1 position to a second in 3d space
- * @param {Double[]|IPos} pos1 - Initial position
- * @param {Double[]|IPos} pos2 - Target Position
+ * @param {(Double[] | IPos)} pos1 - Initial position
+ * @param {(Double[] | IPos)} pos2 - Target Position
  * @returns {Double[]} - Direction contained in an array
  */
 function get3dDirection(pos1, pos2)
@@ -344,7 +344,7 @@ function isInRange(anchorPos, targetPos, range) {
 }
 
 /** Command kills a player
- * @param {IPlayer|String} player 
+ * @param {(IPlayer | String)} player
  * @returns Boolean - If the player was killed
  */
 function kill(player){
@@ -378,7 +378,7 @@ function messageAll(message) {
 }
 
 /** Mimics a whisper message
- * @param {IPlayer|String} player 
+ * @param {(IPlayer | String)} player
  * @param {String} from - Sending name
  * @param {String} message 
  */
@@ -740,6 +740,7 @@ progressBar.prototype.toggleTimeout = function(timeout)
 // deck Class ----------------------------------------------------------------
 
 /** Creates a deck of zero indexed numbers which can be used for deterministic rng
+ * @constructor
  * @param {Int} size - Size of the deck
  * @param {Boolean} noReset - If the deck shouldn't automatically reset
  */

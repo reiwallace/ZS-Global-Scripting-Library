@@ -14,9 +14,9 @@ function animationHandler(entity)
 /** Set entity animation
  * @param {IAnimation} animation - IAnimation object or String name of animation
  */
-animationHandler.prototype.setAnimation = function(animationName) 
+animationHandler.prototype.setAnimation = function(animation) 
 {
-    if(!animationName) return;
+    if(!animation) return;
     if(typeof animation == "string") animation = API.getAnimations().get(animation);
     this.entityAnimData.setEnabled(true);
     this.entityAnimData.setAnimation(animation);

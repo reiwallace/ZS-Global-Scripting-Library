@@ -49,11 +49,11 @@ function speak(player, text, speakID, timeout, color, hasShadow, size, noCenter,
     actionManager.start();
 }
 
-/** Removes overlay from player's screen
- * @param {IPlayer} player 
- * @param {Int} speakID 
+/** Removes speak overlay
+ * @param {IPlayer} player to remove the overlay from
+ * @param {integer} speakID of the overlay to remove
  */
 function cancelSpeak(player, speakID)
-{ 
+{ // Remove text from player screen
     player.closeOverlay(speakID); 
 }

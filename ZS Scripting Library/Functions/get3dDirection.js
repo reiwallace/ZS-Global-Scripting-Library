@@ -1,6 +1,6 @@
 /** Returns direction from 1 position to a second in 3d space
- * @param {Double[]|IPos} pos1 - Initial position
- * @param {Double[]|IPos} pos2 - Target Position
+ * @param {(Double[] | IPos)} pos1 - Initial position
+ * @param {(Double[] | IPos)} pos2 - Target Position
  * @returns {Double[]} - Direction contained in an array
  */
 function get3dDirection(pos1, pos2)

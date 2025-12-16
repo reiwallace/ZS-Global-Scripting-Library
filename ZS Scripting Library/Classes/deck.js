@@ -1,4 +1,7 @@
+// deck Class ----------------------------------------------------------------
+
 /** Creates a deck of zero indexed numbers which can be used for deterministic rng
+ * @constructor
  * @param {Int} size - Size of the deck
  * @param {Boolean} noReset - If the deck shouldn't automatically reset
  */
@@ -65,9 +68,11 @@ deck.prototype.toggleAutoReset = function(reset)
 }
 
 /** Returns the current deck
- * @returns 
+ * @returns Int[]
  */
 deck.prototype.getDeck = function()
 {
     return this.deck;
 }
+
+// ---------------------------------------------------------------------------

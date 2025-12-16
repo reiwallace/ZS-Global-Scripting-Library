@@ -1,3 +1,5 @@
+// progressBar class ---------------------------------------------------------
+
 progressBar.prototype.config = function() {
     // COMPONENT IDS
     this.BORDER_ID = 1;
@@ -166,3 +168,5 @@ progressBar.prototype.toggleTimeout = function(timeout)
 {
     this.DO_TIMEOUT = timeout;
 }
+
+// ---------------------------------------------------------------------------
