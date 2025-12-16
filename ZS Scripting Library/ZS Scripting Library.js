@@ -806,7 +806,7 @@ deck.prototype.toggleAutoReset = function(reset)
 }
 
 /** Returns the current deck
- * @returns 
+ * @returns Int[]
  */
 deck.prototype.getDeck = function()
 {
