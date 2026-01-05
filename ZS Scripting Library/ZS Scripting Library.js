@@ -142,7 +142,7 @@ function speak(player, text, speakID, timeout, color, hasShadow, size, noCenter,
     if(!lib.isPlayer(player)) return;
     var speechOverlay = API.createCustomOverlay(speakID); // Create overlay with id
     var size = typeof size == "number" ? size : 1
-    var x = (noCenter ? 0 : 480 - (Math.floor((text.length) * 2.5) * size)) + (typeof xOffset == "number" ? yOffset : 0); // Calculate centre position
+    var x = (noCenter ? 0 : 480 - (Math.floor((text.length) * 2.5) * size)) + (typeof xOffset == "number" ? xOffset : 0); // Calculate centre position
     var y = (noCenter ? 0 : 246 - (Math.floor(size * 6.5))) + (typeof yOffset == "number" ? yOffset : 0);
     if(hasShadow) speechOverlay.addLabel(1, text, x + size/2, y + size/2, 0, 0, 0);
     speechOverlay.addLabel(2, text, x, y, 0, 0, (typeof color == "number" ? color : 16777215)); // Add label in the middle of the screen with the given color
