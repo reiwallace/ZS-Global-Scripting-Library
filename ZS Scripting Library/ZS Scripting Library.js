@@ -418,13 +418,28 @@ function isPathLocked(player, pathName)
     {
         var GUI = API.createCustomGui(134, 255, 200, false);
         GUI.setBackgroundTexture("jinryuumodscore:gui/training1gui.png");
-        var shadow = GUI.addLabel(1, "Cannot access path " + path + " due to conflict with form " + form, 26, 31, 105, 100);
+
+        var text = "Cannot access path " + path + " due to conflict with form " + form + ".";
+        if(form == "incorrect race")
+            text = "Cannot access path " + path + " as a " + player.getDBCPlayer().getRaceName() + ".";
+
+        var titleShadow = GUI.addLabel(1, "Path Locked!", 82, 31, 105, 100);
+        titleShadow.setColor(0);
+        titleShadow.setScale(1.5);
+
+        var title = GUI.addLabel(2, "Path Locked!", 82, 30, 105, 100);
+        title.setColor(16777215);
+        title.setScale(1.5);
+
+        var shadow = GUI.addLabel(3, text, 39, 55, 105, 100);
         shadow.setColor(0);
-        shadow.setScale(1.4);
-        var label = GUI.addLabel(2, "Cannot access path " + path + " due to conflict with form " + form, 25, 30, 105, 100);
+        shadow.setScale(1.1);
+
+        var label = GUI.addLabel(4, text, 39, 54, 105, 100);
         label.setColor(16777215);
-        label.setScale(1.4);
-        GUI.addButton(3, "Ok", 77, 110, 100, 20);
+        label.setScale(1.1);
+
+        GUI.addButton(5, "Ok", 77, 110, 100, 20);
         player.showCustomGui(GUI);
     }
     
