@@ -3,25 +3,17 @@
  */
 function pathEraser(player) 
 {
-    // EDIT WITH VALID QUEST AND ID
-    var validQuestIds = {
-        quest1: 7,
-        quest2: 8,
-        quest3: 9,
-        PASSFLAG: false // DO NOT EDIT
-    }
-
     if(!lib.isPlayer(player)) return;
     // Check if any valid quest ids are present, return if not
-    for(var i in validQuestIds) {
+    for(var i in libEraserIds) {
         if(i == "PASSFLAG") return;
-        if(player.hasActiveQuest(validQuestIds[i])) {
-            player.finishQuest(validQuestIds[i]);
-            player.stopQuest(validQuestIds[i]);
+        if(player.hasActiveQuest(libEraserIds[i])) {
+            player.finishQuest(libEraserIds[i]);
+            player.stopQuest(libEraserIds[i]);
             break;
         }
     }
-    lib.debugMessage("Noxiiie", "PASS");
+
     // Cycles through player forms on each path and removes any found
     var dbcPlayer = player.getDBCPlayer();
     var playerForms = dbcPlayer.getCustomForms();
@@ -29,9 +21,7 @@ function pathEraser(player)
     for(var i in playerForms) {
         if(!playerForms[i]) continue;
         var form = playerForms[i].getName();
-        for(var p in paths) {
-            if(paths[p].indexOf(form) < 0) continue;
-            dbcPlayer.removeCustomForm(form);
-        }
+        dbcPlayer.removeCustomForm(form);
     }
+    API.executeCommand(player.getWorld(), "dbcskill take OldKaiUnlock " + player.getName());
 }
