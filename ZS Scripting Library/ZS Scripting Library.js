@@ -30,6 +30,8 @@ var libraryObject = {
     messageAll: messageAll,
     whisper: whisper,
     whisperAll: whisperAll,
+    isPathLocked: isPathLocked,
+    pathEraser: pathEraser,
     animationHandler: animationHandler,
     dbcDisplayHandler: dbcDisplayHandler,
     progressBar: progressBar,
@@ -397,6 +399,91 @@ function whisperAll(from, message) {
     for (var i = 0; i < players.length; i++) {
         if(!players[i]) continue;
         lib.whisper(players[i], from, message);
+    }
+}
+
+/** Checks if player is able to access provided path
+ * @param {IPlayer} player 
+ * @param {String} pathName 
+ * @returns {Boolean}
+ */
+function isPathLocked(player, pathName)
+{
+    /** Displays an error message to the player saying why they are path locked
+     * @param {IPlayer} player 
+     * @param {String} form 
+     * @param {String} path 
+     */
+    function displayFormWarning(player, form, path) 
+    {
+        var GUI = API.createCustomGui(134, 255, 200, false);
+        GUI.setBackgroundTexture("jinryuumodscore:gui/training1gui.png");
+        var shadow = GUI.addLabel(1, "Cannot access path " + path + " due to conflict with form " + form, 26, 31, 105, 100);
+        shadow.setColor(0);
+        shadow.setScale(1.4);
+        var label = GUI.addLabel(2, "Cannot access path " + path + " due to conflict with form " + form, 25, 30, 105, 100);
+        label.setColor(16777215);
+        label.setScale(1.4);
+        GUI.addButton(3, "Ok", 77, 110, 100, 20);
+        player.showCustomGui(GUI);
+    }
+    
+    if(!lib.isPlayer(player)) return;
+    var playerForms = player.getDBCPlayer().getCustomForms();
+    var race = player.getDBCPlayer().getRaceName();
+    if(race == "Half-Saiyan") race = "Saiyan";
+    if(!(pathName in libPaths[race])) {
+        displayFormWarning(player, "incorrect race", pathName);
+        return true;
+    }
+    
+    var isStrict = libPaths.STRICTPATHS.indexOf(pathName) >= 0;
+
+    // Check each player form for path compatability
+    for(var i in playerForms) {
+        if(!playerForms[i]) continue;
+        var form = playerForms[i].getName();
+        if(
+            libPaths.GLOBALSTRICT.indexOf(form) < 0 && 
+            libPaths[race][pathName].indexOf(form) < 0 && 
+            (
+                isStrict || 
+                (libPaths[race][race].indexOf(form) < 0 && 
+                libPaths.GLOBALNONSTRICT.indexOf(form) < 0)
+            )) {
+                displayFormWarning(player, form, pathName);
+                return true;
+        }
+    }
+
+    // Return false if player is not locked
+    return false;
+}
+
+/** Checks if player has valid quest ID then nukes all path forms
+ * @param {IPlayer} player 
+ */
+function pathEraser(player) 
+{
+    if(!lib.isPlayer(player)) return;
+    // Check if any valid quest ids are present, return if not
+    for(var i in libEraserIds) {
+        if(i == "PASSFLAG") return;
+        if(player.hasActiveQuest(libEraserIds[i])) {
+            player.finishQuest(libEraserIds[i]);
+            player.stopQuest(libEraserIds[i]);
+            break;
+        }
+    }
+
+    // Cycles through player forms on each path and removes any found
+    var dbcPlayer = player.getDBCPlayer();
+    var playerForms = dbcPlayer.getCustomForms();
+    // Check each player form for path compatability
+    for(var i in playerForms) {
+        if(!playerForms[i]) continue;
+        var form = playerForms[i].getName();
+        dbcPlayer.removeCustomForm(form);
     }
 }
 
