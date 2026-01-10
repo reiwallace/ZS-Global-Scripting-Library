@@ -1,6 +1,6 @@
 // ZSWORD FUNCTIONS CONFIG
-var zSwordLinkedId = 0;
-var zSwordQuestId = 0;
+var zSwordLinkedId = 29;
+var zSwordQuestId = 3268;
 var zSwordRewardSlot = 0;
 
 /** Give Z Sword from quest rewards
